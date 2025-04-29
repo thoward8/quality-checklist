@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Quality Installation Checklist - Fancy Version</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <style>
+        body { font-family: Arial, sans-serif; padding: 20px; }
+        fieldset { margin-bottom: 20px; }
+        label { display: block; margin-top: 10px; }
+        input, textarea { width: 100%; box-sizing: border-box; }
+        img { max-width: 100%; margin-top: 10px; }
+        canvas { margin-top: 10px; border: 1px solid #000; }
+    </style>
+</head>
+<body>
+
+<h1>Quality Installation Checklist (Enhanced)</h1>
+
+<form id="qualityChecklist">
+
+    <fieldset>
+        <legend>Customer Information</legend>
+        <label>Name: <input type="text" name="customerName"></label>
+        <label>Address: <input type="text" name="address"></label>
+        <label>Phone: <input type="text" name="phone"></label>
+        <label>Email: <input type="text" name="email"></label>
+        <label>Date: <input type="date" name="date"></label>
+    </fieldset>
+
+    <fieldset>
+        <legend>Outdoor Unit</legend>
+        <label>Are We Replacing the Outdoor Unit? <input type="text" name="replaceOutdoor"></label>
+        <label>Existing Outdoor Unit Type: <input type="text" name="outdoorType"></label>
+        <label>Existing Outdoor Unit Brand: <input type="text" name="outdoorBrand"></label>
+        <label>Photo of Outdoor Unit Data Tag:
+            <input type="file" name="outdoorPhoto" accept="image/*" capture="environment">
+            <img id="outdoorPreview">
+        </label>
+    </fieldset>
+
+    <fieldset>
+        <legend>Indoor Unit</legend>
+        <label>Are We Replacing the Evaporator Coil? <input type="text" name="replaceCoil"></label>
+        <label>Are We Replacing the Air Handler? <input type="text" name="replaceAirHandler"></label>
+        <label>Existing Indoor Unit Brand: <input type="text" name="indoorBrand"></label>
+        <label>Photo of Indoor Unit Data Tag:
+            <input type="file" name="indoorPhoto" accept="image/*" capture="environment">
+            <img id="indoorPreview">
+        </label>
+    </fieldset>
+
+    <fieldset>
+        <legend>Thermostat</legend>
+        <label>Are We Replacing the Thermostat? <input type="text" name="replaceThermostat"></label>
+        <label>Photo of Thermostat:
+            <input type="file" name="thermostatPhoto" accept="image/*" capture="environment">
+            <img id="thermostatPreview">
+        </label>
+    </fieldset>
+
+    <fieldset>
+        <legend>Signature</legend>
+        <canvas id="signatureCanvas" width="300" height="100"></canvas><br>
+        <button type="button" onclick="clearSignature()">Clear Signature</button>
+    </fieldset>
+
+    <fieldset>
+        <legend>Notes</legend>
+        <label>Special Instructions or Notes:<br>
+            <textarea name="notes" rows="5" cols="50"></textarea>
+        </label>
+    </fieldset>
+
+    <input type="submit" value="Generate PDF">
+
+</form>
+
+<script src="fancy_script.js"></script>
+
+</body>
+</html>
