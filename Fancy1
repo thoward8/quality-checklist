@@ -1,0 +1,103 @@
+function clearSignature() {
+    const canvas = document.getElementById('signatureCanvas');
+    const ctx = canvas.getContext('2d');
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+}
+
+document.querySelector('[name="outdoorPhoto"]').addEventListener('change', function() {
+    previewImage(this, 'outdoorPreview');
+});
+document.querySelector('[name="indoorPhoto"]').addEventListener('change', function() {
+    previewImage(this, 'indoorPreview');
+});
+document.querySelector('[name="thermostatPhoto"]').addEventListener('change', function() {
+    previewImage(this, 'thermostatPreview');
+});
+
+function previewImage(input, previewId) {
+    const file = input.files[0];
+    if (file) {
+        const reader = new FileReader();
+        reader.onload = function(e) {
+            document.getElementById(previewId).src = e.target.result;
+        }
+        reader.readAsDataURL(file);
+    }
+}
+
+document.getElementById('qualityChecklist').addEventListener('submit', async function (e) {
+    e.preventDefault();
+
+    const { jsPDF } = window.jspdf;
+    const doc = new jsPDF();
+
+    const customerName = document.querySelector('[name="customerName"]').value;
+    const address = document.querySelector('[name="address"]').value;
+    const phone = document.querySelector('[name="phone"]').value;
+    const email = document.querySelector('[name="email"]').value;
+    const date = document.querySelector('[name="date"]').value;
+    const replaceOutdoor = document.querySelector('[name="replaceOutdoor"]').value;
+    const outdoorType = document.querySelector('[name="outdoorType"]').value;
+    const outdoorBrand = document.querySelector('[name="outdoorBrand"]').value;
+    const replaceCoil = document.querySelector('[name="replaceCoil"]').value;
+    const replaceAirHandler = document.querySelector('[name="replaceAirHandler"]').value;
+    const indoorBrand = document.querySelector('[name="indoorBrand"]').value;
+    const replaceThermostat = document.querySelector('[name="replaceThermostat"]').value;
+    const notes = document.querySelector('[name="notes"]').value;
+
+    doc.setFontSize(12);
+    doc.rect(5, 5, 200, 287); // Border
+    doc.text(`Customer Information`, 10, 10);
+    doc.line(5, 15, 205, 15);
+
+    doc.text(`Name: ${customerName}`, 10, 25);
+    doc.text(`Address: ${address}`, 10, 35);
+    doc.text(`Phone: ${phone}`, 10, 45);
+    doc.text(`Email: ${email}`, 10, 55);
+    doc.text(`Date: ${date}`, 10, 65);
+
+    doc.text(`Outdoor Unit`, 10, 80);
+    doc.line(5, 85, 205, 85);
+    doc.text(`Replace Outdoor Unit: ${replaceOutdoor}`, 10, 95);
+    doc.text(`Type: ${outdoorType}`, 10, 105);
+    doc.text(`Brand: ${outdoorBrand}`, 10, 115);
+
+    doc.text(`Indoor Unit`, 10, 130);
+    doc.line(5, 135, 205, 135);
+    doc.text(`Replace Coil: ${replaceCoil}`, 10, 145);
+    doc.text(`Replace Air Handler: ${replaceAirHandler}`, 10, 155);
+    doc.text(`Indoor Brand: ${indoorBrand}`, 10, 165);
+
+    doc.text(`Thermostat`, 10, 180);
+    doc.line(5, 185, 205, 185);
+    doc.text(`Replace Thermostat: ${replaceThermostat}`, 10, 195);
+
+    doc.text(`Notes`, 10, 210);
+    doc.line(5, 215, 205, 215);
+    doc.text(notes, 10, 225, { maxWidth: 180 });
+
+    // Handle images
+    const addImage = async (inputName, x, y) => {
+        const fileInput = document.querySelector(`[name="${inputName}"]`);
+        if (fileInput.files.length > 0) {
+            const file = fileInput.files[0];
+            const reader = new FileReader();
+            reader.onload = function (event) {
+                doc.addImage(event.target.result, 'JPEG', x, y, 50, 50);
+            };
+            reader.readAsDataURL(file);
+        }
+    };
+
+    await addImage('outdoorPhoto', 140, 20);
+    await addImage('indoorPhoto', 140, 80);
+    await addImage('thermostatPhoto', 140, 140);
+
+    // Add signature
+    const canvas = document.getElementById('signatureCanvas');
+    const signatureImage = canvas.toDataURL('image/png');
+    doc.addImage(signatureImage, 'PNG', 10, 260, 100, 30);
+
+    doc.save('Quality-Installation-Checklist.pdf');
+});
+
