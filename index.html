@@ -1,83 +1,49 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Quality Installation Checklist - Fancy Version</title>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
-    <style>
-        body { font-family: Arial, sans-serif; padding: 20px; }
-        fieldset { margin-bottom: 20px; }
-        label { display: block; margin-top: 10px; }
-        input, textarea { width: 100%; box-sizing: border-box; }
-        img { max-width: 100%; margin-top: 10px; }
-        canvas { margin-top: 10px; border: 1px solid #000; }
-    </style>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Full HVAC Installation Wizard</title>
+  <style>
+    body { font-family: Arial, sans-serif; padding: 20px; }
+    .tab { display: none; }
+    .tab.active { display: block; }
+    .nav-buttons { margin-top: 20px; }
+    button { padding: 10px 15px; margin-right: 10px; }
+    fieldset { margin-bottom: 15px; }
+    input, select, textarea { width: 100%; margin-top: 5px; }
+  </style>
 </head>
 <body>
 
-<h1>Quality Installation Checklist (Enhanced)</h1>
+<h1>HVAC Installation Checklist Wizard</h1>
 
-<form id="qualityChecklist">
+<form id="hvacForm">
+  <!-- Section Tabs -->
+  <div class="tab active" id="tab1"><h2>1. Customer Information</h2><fieldset><p>[Fields go here]</p></fieldset></div>
+  <div class="tab" id="tab2"><h2>2. Date & Time of Inspection</h2><fieldset><p>[Fields go here]</p></fieldset></div>
+  <div class="tab" id="tab3"><h2>3. Job Address</h2><fieldset><p>[Fields go here]</p></fieldset></div>
+  <div class="tab" id="tab4"><h2>4. Billing Address</h2><fieldset><p>[Fields go here]</p></fieldset></div>
+  <div class="tab" id="tab5"><h2>5. Street View & Area Served</h2><fieldset><p>[Fields go here]</p></fieldset></div>
+  <div class="tab" id="tab6"><h2>6. Existing Outdoor Unit</h2><fieldset><p>[Fields go here]</p></fieldset></div>
+  <div class="tab" id="tab7"><h2>7. Existing Coil or Air Handler</h2><fieldset><p>[Fields go here]</p></fieldset></div>
+  <div class="tab" id="tab8"><h2>8. Existing Furnace</h2><fieldset><p>[Fields go here]</p></fieldset></div>
+  <div class="tab" id="tab9"><h2>9. Electrical Power</h2><fieldset><p>[Fields go here]</p></fieldset></div>
+  <div class="tab" id="tab10"><h2>10. Venting and Combustion Air</h2><fieldset><p>[Fields go here]</p></fieldset></div>
+  <div class="tab" id="tab11"><h2>11. Refrigerant Line-set Run</h2><fieldset><p>[Fields go here]</p></fieldset></div>
+  <div class="tab" id="tab12"><h2>12. Thermostat, Zoning, Control Wiring</h2><fieldset><p>[Fields go here]</p></fieldset></div>
+  <div class="tab" id="tab13"><h2>13. Indoor Air Quality Accessories</h2><fieldset><p>[Fields go here]</p></fieldset></div>
+  <div class="tab" id="tab14"><h2>14. Existing Ductwork</h2><fieldset><p>[Fields go here]</p></fieldset></div>
+  <div class="tab" id="tab15"><h2>15. Insulation Condition</h2><fieldset><p>[Fields go here]</p></fieldset></div>
+  <div class="tab" id="tab16"><h2>16. Special Instructions</h2><fieldset><p>[Fields go here]</p></fieldset></div>
 
-    <fieldset>
-        <legend>Customer Information</legend>
-        <label>Name: <input type="text" name="customerName"></label>
-        <label>Address: <input type="text" name="address"></label>
-        <label>Phone: <input type="text" name="phone"></label>
-        <label>Email: <input type="text" name="email"></label>
-        <label>Date: <input type="date" name="date"></label>
-    </fieldset>
-
-    <fieldset>
-        <legend>Outdoor Unit</legend>
-        <label>Are We Replacing the Outdoor Unit? <input type="text" name="replaceOutdoor"></label>
-        <label>Existing Outdoor Unit Type: <input type="text" name="outdoorType"></label>
-        <label>Existing Outdoor Unit Brand: <input type="text" name="outdoorBrand"></label>
-        <label>Photo of Outdoor Unit Data Tag:
-            <input type="file" name="outdoorPhoto" accept="image/*" capture="environment">
-            <img id="outdoorPreview">
-        </label>
-    </fieldset>
-
-    <fieldset>
-        <legend>Indoor Unit</legend>
-        <label>Are We Replacing the Evaporator Coil? <input type="text" name="replaceCoil"></label>
-        <label>Are We Replacing the Air Handler? <input type="text" name="replaceAirHandler"></label>
-        <label>Existing Indoor Unit Brand: <input type="text" name="indoorBrand"></label>
-        <label>Photo of Indoor Unit Data Tag:
-            <input type="file" name="indoorPhoto" accept="image/*" capture="environment">
-            <img id="indoorPreview">
-        </label>
-    </fieldset>
-
-    <fieldset>
-        <legend>Thermostat</legend>
-        <label>Are We Replacing the Thermostat? <input type="text" name="replaceThermostat"></label>
-        <label>Photo of Thermostat:
-            <input type="file" name="thermostatPhoto" accept="image/*" capture="environment">
-            <img id="thermostatPreview">
-        </label>
-    </fieldset>
-
-    <fieldset>
-        <legend>Signature</legend>
-        <canvas id="signatureCanvas" width="300" height="100"></canvas><br>
-        <button type="button" onclick="clearSignature()">Clear Signature</button>
-    </fieldset>
-
-    <fieldset>
-        <legend>Notes</legend>
-        <label>Special Instructions or Notes:<br>
-            <textarea name="notes" rows="5" cols="50"></textarea>
-        </label>
-    </fieldset>
-
-    <input type="submit" value="Generate PDF">
-
+  <!-- Navigation -->
+  <div class="nav-buttons">
+    <button type="button" onclick="prevTab()">Back</button>
+    <button type="button" onclick="nextTab()">Next</button>
+  </div>
 </form>
 
-<script src="fancy_script.js"></script>
-
+<script src="full_wizard.js"></script>
 </body>
 </html>
